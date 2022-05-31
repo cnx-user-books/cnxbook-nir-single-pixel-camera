@@ -1,0 +1,124 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:md="http://cnx.rice.edu/mdml" xmlns:bib="http://bibtexml.sf.net/">
+  <title>Compressive Imaging</title>
+  <metadata><md:content-id>undefined</md:content-id><md:title/><md:uuid>044a4406-d5a6-452d-b095-4b224e03e5be</md:uuid>
+</metadata>
+  <content>
+<para id="element-198">In order to achieve the goals set out in the project introduction, we intend to exploit compressive sensing.  The reasoning behind our choice of this technique and the technique itself are described in detail in the following paragraphs.</para>
+
+<para id="cs1"> A conventional digital camera works by capturing light from an object and focusing it through a lens onto an array of sensors.  Cameras used by the general public operate in the visible range, 400 to 750 nm, with CMOS sensors.  They can be modified to image in a slightly wider range, from 280 to 1200 nm, if their infrared (IR) filters are removed <cite target-id="modir"/>. </para>
+
+<para id="cs2"> Current IR cameras can operate in much higher ranges, from the near infrared (NIR) at 0.75 – 1.4 µm, to the far infrared (FIR) at 15 – 1,000 µm <cite target-id="wiki"/>.  The average person, however, does not have the purchasing power to buy an IR camera, as one generally costs between $3,000 and $50,000<cite target-id="lichty-email"/>.  Even for companies or governmental institutions, this is a substantial sum of money. </para>
+
+<para id="cs3"> The bulk of the cost of an IR camera is in its sensor array and the cooling system that regulates the array's temperature.  The array alone accounts for at least one-third of any IR camera's price.  The cooling system that helps reduce background noise and the effects of pixel bleeding is similarly expensive.  Unfortunately, there is no Moore's law for these sort of components.  Unlike transistors, IR sensors and their cooling systems are not likely to decrease in size or cost anytime in the near future.  Thus, while the camera's image processing chips will probably become cheaper in the next few years, no such reduction in cost can be predicted for the sensor components.  In fact, as the general trend in the camera industry is toward more pixels, it is likely that soon the cost of an IR camera will be almost solely determined by the price of its sensor array and this array's cooling system. </para>
+
+<para id="cs4"> Therefore, to create an economical IR camera, the number of sensors and cost of their cooling system would have to be dramatically reduced, without severely damaging the camera’s resolution.  The technology to do this already exists; it is called compressive sensing.  In principle, a compressive sensing device needs only a single sensor—a single pixel.  Not only does the use of a single pixel remove the price of a sensor array from the picture, but also it has the potential to reduce the cost of the sensor cooling system.  Since a single pixel device does not suffer from the pixel-bleeding problem that necessitates a high-quality cooling system in regular IR cameras, in a single-pixel camera an inexpensive cooling alternative just for removing background noise could be used. </para>
+
+<section id="csh">
+<title>Compessive Sensing Hardware</title>
+<para id="cs5"> The basic operation of a compressive sensing camera is relatively simple.  Light from an object is focused by a lens onto a digital micromirror device (DMD).  A DMD is an array of tiny mirrors that can be tilted ±10-12º, from “on” to “off” positions <cite target-id="cscam"/>.  In the “on” state, these mirrors reflect light from the object to a secondary lens, which focuses this light to the sensor.  Data from this sensor is sent to a signal processing unit, which manipulates data points to construct an image of the original object.  To generate a set of useful data points for image reconstruction, the mirrors of the DMD are flipped into a series of random configurations, in each of which approximately half of the mirrors are in their on position. </para><figure id="element-642"><title>DMD Mirrors</title>
+  <media id="idm5654448" alt=""><image src="../../media/mirror.jpg" mime-type="image/jpeg"/></media>
+  <caption>Close-up diagram of two typical DMD mirrors <cite target-id="dmd-sch"/></caption></figure><figure id="element-361"><title>CS Example</title>
+  <media id="idm12120624" alt=""><image src="../../media/how_cs_works.png" mime-type="image/png"/></media>
+  <caption>How a compressive sensing camera works <cite target-id="baraniuk-07"/></caption></figure>
+</section>
+
+<section id="std">
+<title>Standard Imaging Theory</title>
+<para id="element-151">For an N-pixel image, N samples are taken.  Then, since this is usually too many samples too store or transmit, the data is compressed.  Transform coding is used to perform the compression.  This takes a sample vector x and expresses it in basis Ψ, as shown in the figure below.  Then, x can be specified  just by the K-sparse matrix s, which has K muchlessthan N non-zero values.  One example of a typical Ψ matrix is the discrete cosine transform (DCT) used for JPEG.  This works well for natural images, as they tend to be sparse in the DCT.</para><figure id="element-168"><title>Standard Image Compression</title>
+  <media id="idm4973472" alt=""><image src="../../media/dct.png" mime-type="image/png" height="200"/></media>
+  <caption><m:math>
+ <m:semantics>
+  <m:mrow>
+   <m:mi>x</m:mi><m:mo>=</m:mo><m:mi>Ψ</m:mi><m:mi>s</m:mi>
+  </m:mrow>
+ <m:annotation encoding="MathType-MTEF">
+ </m:annotation>
+ </m:semantics>
+</m:math>
+<cite target-id="baraniuk-07"/></caption></figure><para id="element-334">The standard approach is lossy.  N - K samples are thrown away, and only the K values from s are stored or transmitted.  This means that removed data cannot be recovered afterwards, so the quality of the image cannot be improved later.</para>
+</section>
+
+<section id="cs">
+<title>Compressive Sensing Theory</title>
+<para id="element-836">The standard sample-then-compress process can be simplified.  Consider directly acquiring a signal in a compressed representation.  Say we obtain M lessthan N measurements and place them in the vector y.  Then y is equivalent to the inner product of x and M other vectors (where x is the N-sample vector from the standard sampling example).  If we stack these M other vectors into the matrix Φ, then the overall equation becomes <m:math>
+ <m:semantics>
+  <m:mrow>
+   <m:mi>y</m:mi><m:mo>=</m:mo><m:mi>Φ</m:mi><m:mi>x</m:mi><m:mo>=</m:mo><m:mi>Φ</m:mi><m:mi>Ψ</m:mi><m:mi>s</m:mi>
+  </m:mrow>
+ <m:annotation encoding="MathType-MTEF">
+ </m:annotation>
+ </m:semantics>
+</m:math>
+.  This is illustrated in the figure below.</para><figure id="element-60"><title>Introducing the Matrix Φ</title>
+  <media id="idm5887456" alt=""><image src="../../media/matrix.png" mime-type="image/png" height="200"/></media>
+  <caption><m:math>
+ <m:semantics>
+  <m:mrow>
+   <m:mi>y</m:mi><m:mo>=</m:mo><m:mi>Φ</m:mi><m:mi>x</m:mi><m:mo>=</m:mo><m:mi>Φ</m:mi><m:mi>Ψ</m:mi><m:mi>s</m:mi>
+  </m:mrow>
+ <m:annotation encoding="MathType-MTEF">
+ </m:annotation>
+ </m:semantics>
+</m:math> <cite target-id="baraniuk-07"/></caption></figure><para id="element-896">Gaussian noise actually works quite well for creating the <m:math>
+ <m:semantics>
+  <m:mi>Φ</m:mi>
+ <m:annotation encoding="MathType-MTEF">
+ </m:annotation>
+ </m:semantics>
+</m:math>
+ matrix.  So, the only really difficult math to be done here is in designing a reconstruction algorithm to obtain x from y.  This is a complex process, but faster methods are developing rapidly.</para>   
+</section>
+  </content>
+  
+<bib:file>
+<bib:entry id="modir">
+  <bib:misc>
+    <bib:howpublished>http://www.maxmax.com/aXRayIRCameras.htm</bib:howpublished>
+    <bib:month>October</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="wiki">
+  <bib:misc>
+    <bib:howpublished>http://en.wikipedia.org/wiki/Infrared</bib:howpublished>
+    <bib:month>October</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="lichty-email">
+  <bib:misc>
+    <bib:author>A. Lichty</bib:author>
+    <bib:howpublished>personal communication</bib:howpublished>
+    <bib:month>October</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="cscam">
+  <bib:misc>
+    <bib:howpublished>http://www.dsp.ece.rice.edu/cs/cscamera/</bib:howpublished>
+    <bib:month>October</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="dmd-sch">
+  <bib:misc>
+    <bib:howpublished>http://www.bccrc.ca/images/ci/adlugan_dmd_schematic.jpg</bib:howpublished>
+    <bib:month>October</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="baraniuk-07">
+  <bib:article>
+    <bib:author>R. Baraniuk</bib:author>
+    <bib:title>Compressive Sensing</bib:title>
+    <bib:journal>IEEE Signal Processing Magazine</bib:journal>
+    <bib:year>2007</bib:year>
+    <bib:volume>24</bib:volume>
+    <bib:month>July</bib:month>
+  </bib:article>
+</bib:entry>
+
+
+</bib:file>
+  
+</document>

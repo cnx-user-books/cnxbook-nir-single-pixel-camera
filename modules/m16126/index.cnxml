@@ -1,0 +1,122 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml" xmlns:bib="http://bibtexml.sf.net/">
+  <title>Projector Setup and Issues</title>
+  <metadata><md:content-id>undefined</md:content-id><md:title/><md:uuid>e7045d06-4960-4d75-a15f-fcf51eabd36f</md:uuid>
+</metadata>
+  <content>
+    <para id="element-284">To implement a compressive sensing camera, the most vital element is the DMD.  There are two practical alternatives for incorporating a DMD into a prototype: 
+
+<list id="l1">
+<item>Use the DMD that is built into a standard DLP projector, or</item>
+<item>Buy a TI Discovery Board kit.</item>
+</list>  
+
+We chose to investigate the projector option first, as it offers a compact structure with a lamp and set of lenses already built in.  The following paragraphs and images walk through the work we did to attempt to adapt the projector into an NIR camera.</para><para id="element-790">The overall system we worked with consisted of the projector and the surrounding components that can be seen in the figure below.  The basic flow of control in this system is as follows: 
+
+<list id="l2" list-type="enumerated">
+<item>Laptop sends random frames to the projector</item>
+<item>Projector light, modulated by the frames on the DMD, is projected on to the target object</item>
+<item>Light reflects off the target back towards the projector</item>
+<item>Zoom lens beside the projector captures the reflected light and focuses it down onto a photodiode</item> 
+<item>Photodiode output goes through a preamplifier and filter</item>
+<item>Filter output feeds into a DAQ</item>
+<item>DAQ output is sent back to the laptop for reconstruction into the target image</item>
+</list>
+
+</para><figure id="element-298"><title>Overall System</title>
+  <media id="idm13786160" alt=""><image src="../../media/total_system.jpg" mime-type="image/jpeg" width="500"/></media>
+  <caption>Laptop, projector, zoom lens, and DAQ</caption></figure><para id="element-551">The image below shows the zoom lens that we used to focus reflected light onto our photodiode.  This photodiode has both an NIR detector and a visible detector.  Both have a 1.5mm diameter active area, onto which the zoom lens needs to focus all the light it takes in.  We had great difficulty getting this focus correct.  Ultimately, we ended up focusing it by connecting the output of the photodiode to an oscilloscope, then turning the fine and coarse focus knobs until the maximum signal was achieved.  Even with careful focusing, we only obtained max measurements of about 100mV for the NIR signal, when all mirrors of the DMD were turned to their "on" position.</para><figure id="element-199"><title>Zoom Lens</title>
+  <media id="idm3610736" alt=""><image src="../../media/zoom_lens.jpg" mime-type="image/jpeg" height="200"/></media>
+  <caption>10x zoom lens with photodiode mounted at focal point</caption>
+</figure><para id="element-311">To combat the zoom lens focusing difficulties and try to achieve a greater signal at the photodiode, we investigated different lamp alternatives.  The standard projector lamp we originally worked with, pictured below, has a power of 200W.  Much of its output is not in the NIR range, however.  Thus, we found a 100W bulb with its peak emittance at 1 micron, and ordered it.  However, replacing the projector bulb with this new bulb proved very cumbersome.  The new bulb required a different power supply (12V, 8A, DC) than the projector bulb, so we had to buy a separate power source for it.  Additionally, the projector has a safety feature which requires that something be attached to its lamp socket, or else it will not run.  So, we had to make a set of connectors for the original projector lamp so that we could remove the lamp from its place inside the projector.  After all of this, though, in the end we found it prohibitively difficult to mount the new bulb in the projector, as we could find no good way to secure it in place.</para><figure id="element-387"><title>Projector Lamp</title>
+  <media id="idm3986976" alt=""><image src="../../media/proj_lamp.jpg" mime-type="image/jpeg" height="250"/></media>
+  <caption>Standard mercury lamp from an Optoma projector</caption></figure><para id="element-457">In addition to difficulties with the light source and focusing lens, we also had trouble with speeding up image acquisition time.  We originally were sending frames to the projector from a standard MATLAB script.  This was very slow.  Using the Psychtoolbox plugin allowed us to take advantage of frame buffering <cite target-id="psychtb"/>.  This sped up the rate to between 15 and 50 frames per second (fps).  The frames shown in the video below change at a rate in this range.</para><figure id="element-724"><title>Random Frames</title>
+  <media id="idm1015344" alt=""><video src="movie.mpg" mime-type="video/mpeg"/></media>
+  <caption>Illustration of random frames displayed as MATLAB movie</caption></figure><para id="element-422">To further decrease capture time we tried exploring
+tighter control of the projector's image display capabilities.
+Although the video frame rate is 60 Hz, which is the maximum rate
+at which the projector can receive images, the mirrors on the
+projector's digital micromirror array (DMD) flip at a rate of at
+least 1000 Hz.  Possibly, the mirror flip rate may even be as
+fast as 9800 Hz <cite target-id="dmd-specs"/>.   So, we wanted to use
+every mirror flip as a random frame for our CS measurements,
+rather than just using each video frame to take one measurement. The result would be such that for each video frame, we would obtain between 16 and 164 measurements.  Ultimately, if for a 1-megapixel image we required 100,000 frames, then this could give an image capture time of 10 to 50 seconds.
+</para><para id="element-635">In order to exploit each individual mirror flip, we needed to
+understand pulse width modulation (PWM).  This is the scheme that
+the projector uses to determine mirror flipping.  Under normal
+operation conditions, PWM is used to simulate grayscale values of
+image frames.  For example, consider the image in the figure below.  In this image, the grayscale of the
+right half is true while the grayscale of the left half is an
+illusion: the left half in fact contains only black and white
+dots, no grey.  A projector creates the grayscale illusion in a
+similar manner.  By rapidly toggling its mirrors between "on"
+to "off" positions, it tricks the eye into perceiving a series
+of black and white squares as grey.  The "on"/"off" pattern
+is determined according to PWM.
+</para><figure id="element-743"><title>Grayscale Image</title>
+  <media id="idm6538768" alt=""><image src="../../media/hill.png" mime-type="image/png"/></media>
+  <caption>Mirror flickering on a DMD creates the illusion of grayscale through PWM <cite target-id="hill-image"/></caption></figure><para id="element-173">Our investigation of PWM schemes led us to understand that
+basic PWM works as illustrated in the example of the figure below.  First, the time allotted for a video frame
+(1/60th of a second) is divided into blocks.  There is one block
+for each bit of a pixel's grayscale value.  If grayscale values
+can range between 0 and 31, then 6 blocks are created.  For the
+length of each block, the mirror will either be turned to its
+"on" position if the bit associated with the block is a 1, or
+its "off" position if the bit associated with the block is a 0.
+This is an acceptable method for creating a grayscale effect
+using only black and white projections.  However, the long
+duration of blocks associated with higher-order bits can produce
+effects that are jarring to the eye.</para><figure id="element-499"><title>Basic PWM</title>
+  <media id="idm6827696" alt=""><image src="../../media/pwm-1.png" mime-type="image/png" height="250"/></media>
+  <caption>An example of how basic PWM works <cite target-id="doherty-98"/></caption></figure><para id="element-319">A smoother version of PWM is used in most projectors, to
+reduce the jarring effects seen with basic PWM <cite target-id="doherty-98"/>.
+The methodology of smooth PWM is illustrated in the example below.  This modulation scheme devotes the same amount
+of time to each bit as basic PWM.  However, instead of laying the
+blocks for each bit end-to-end, it breaks them up into smaller
+packets and mixes them up.  Each block from basic PWM becomes a
+series of blocks in smooth PWM.  These smaller blocks are spread
+out over the entire time for a frame, alternating with blocks
+that represent the other bits of the desired grayscale value.</para><figure id="element-254"><title>Smooth PWM</title>
+  <media id="idm6506992" alt=""><image src="../../media/pwm-2.png" mime-type="image/png" height="250"/></media>
+  <caption>An example of how smooth PWM works <cite target-id="doherty-98"/></caption></figure><para id="element-982">After completing textbook research of PWM, we attempted to observe PWM patterns in the lab.  We sent the
+projector frames with known grayscale values and captured the
+mirror-flipping with a visible-range photodiode.  However, the mirror-flipping patterns we observed with this approach did not resemble anything like what we had expected.  They looked something like the plot shown in the figure below.  At first we thought the problem must be on the photodiode end.  Yet, the specification sheet for the photodiode listed its response time in the nanosecond range. So, we took another look at the documentation of PWM available on TI's website, and emailed some TI representatives to see if they could give us some insight on the problem.  From these sources, we learned that the PWM scheme employed by current DLP projectors is very much more complex than that described in the examples of basic and smooth PWM above.  Although smooth PWM may be a part of what current projectors use, the actual mirror flipping patterns are determined based on an algorithm that takes into account a large variety of projector settings.  We were told that, in fact, TI considers their mirror-flipping algorithms proprietary, as these codes contribute to the projector's image quality.</para><figure id="element-617"><title>Observed PWM</title>
+  <media id="idm4121424" alt=""><image src="../../media/grayscale67.PNG" mime-type="image/png" height="150"/></media>
+  <caption>Mirror flipping for the grayscale value 67</caption></figure><para id="element-809">Due to the multitude of dead ends we ran into trying to create a projector-based version of a compressive sensing NIR camera, we turned to working with a stand-alone DMD board for the last few months of our project.</para>   
+  </content>
+
+<bib:file>
+<bib:entry id="doherty-98">
+  <bib:misc>
+    <bib:author>D. Doherty, G. Hewlett</bib:author>
+    <bib:title>10.4: Phased Reset Timing for Improved Digital Micromirror Device (DMD) Brightness</bib:title>
+    <bib:howpublished>http://citeseer.ist.psu.edu/243072.html</bib:howpublished>
+    <bib:year>1998</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="hill-image">
+  <bib:misc>
+    <bib:title>Grayscale Hill</bib:title>
+<bib:howpublished>http://carol.gimp.org/GIMP/howto/desaturate/decompose-gray-RGB.png</bib:howpublished>
+    <bib:month>November</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="psychtb">
+  <bib:misc>
+    <bib:title>Psychtoolbox</bib:title>
+<bib:howpublished>http://psychtoolbox.org/</bib:howpublished>
+    <bib:month>December</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="dmd-specs">
+  <bib:misc>
+    <bib:author>Texas Instruments</bib:author>
+    <bib:title>DMD Discovery 1100: Controller Board and Starter Kit</bib:title>
+<bib:howpublished>http://focus.ti.com/download/dlpdmd/DiscoveryStarterKit.pdf</bib:howpublished>
+    <bib:year>2004</bib:year>
+  </bib:misc>
+</bib:entry>
+</bib:file>
+  
+</document>

@@ -1,0 +1,442 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml" xmlns:bib="http://bibtexml.sf.net/">
+  <title>Project Introduction</title>
+  <metadata><md:content-id>undefined</md:content-id><md:title/><md:uuid>1ca4a2aa-cb1c-4f50-b05e-8321beba2f6c</md:uuid>
+</metadata>
+  <content>
+<section id="ps">
+<title>Problem Statement</title>
+<para id="psp1">
+
+The ability to image sketches hidden by layers of paint is a
+valuable asset to art purchasers in their attempts to
+exhaustively examine the works they collect.  Art conservators
+value a painting's underdrawings for two main reasons.  The first
+is that underdrawings can be exploited as an aid in determining
+whether the painting is an original or a forgery, by comparing
+the style of the underdrawings to those of an artist's other
+works.  The second is that comparisons between a painting and its
+own underdrawing can give new insights into an artist's creative
+process for that work of art.  Underdrawing images are best
+revealed by near infrared (NIR) cameras because all paint
+pigments, except black, are somewhat transparent in the 900 - 1700 nm range<cite target-id="richards-03"/>.  However, current NIR cameras
+that are sensitive in this wavelength range are exorbitantly
+expensive, typically costing around $50,000<cite target-id="lichty-email"/>.
+This leaves the market of small art museums and individual art
+collectors unaddressed.  We intend to deliver an NIR camera that
+meets or exceeds key imaging system parameters in this market,
+such as spectral range, image resolution, capture time, and
+portability, while also reducing cost below the $5,000 level.
+</para>
+</section>
+
+<section id="bg">
+<title>Background</title>
+<para id="bgp1">
+
+Before the 1960s, there was only one way to examine a painting's
+underdrawing: the layers of paint in front of the underdrawing had to
+be removed, thereby destroying the painting in the process.  This was
+unacceptable for multiple reasons.  Since underdrawings are typically
+of less interest than the finished painting, removing the layers of
+paint on top is not justified.  Also, many interesting results come
+from a detailed comparison between the original painting and its
+underdrawing.  This comparison is difficult if the paint layers must
+be destroyed to access the underdrawing.
+</para>
+
+<para id="bgp2">
+J. R. J. van Asperen de Boer was the first to image underdrawings
+using NIR reflectography in 1968 <cite target-id="boer-68"/>.  Previous
+attempts had used an NIR camera to passively capture light in
+that range.  However, with passive capture it was difficult to
+see through pigments such as green, since most of the light
+collected was in the range of 750 - 900 nm, which is below the
+range where those colors are transparent.  Boer solved this
+problem by capturing the reflected light from a tungsten lamp
+that produced radiation of wavelengths up to 2500 nm, giving a
+much clearer image of the underdrawing.  While Boer's design has
+been improved in numerous ways during the past four decades, it
+remains fundamental to most techniques for imaging underdrawings
+nondestructively.
+</para>
+
+<para id="bgp3">
+<link target-id="ren"/> and <link target-id="laib"/> below are examples of
+comparisons between original paintings and their underdrawings as
+captured with a typical modern NIR camera.  In <link target-id="ren"/>,
+the underdrawing shows that the man in the top hat, the artist's
+accountant, was initially looking towards the viewer, but later
+this changed so that he looked away, purportedly because of
+disagreements between the two men <cite target-id="sensorsinc"/>.  In <link target-id="laib"/>, a large arrow can be seen on the chest of a horse on
+the underdrawing of a painting by Laib.  This arrow is absent
+from the overlaid painted image.
+</para>
+
+<figure id="ren">
+  <media id="idm160544" alt=""><image src="../../media/renoir.jpg" mime-type="image/jpeg"/></media>
+  <caption>Comparison between NIR and visible range images of a Renoir
+  painting <cite target-id="sensorsinc"/>.</caption>
+</figure>
+
+<figure id="laib">
+  <media id="idp435344" alt=""><image src="../../media/laib.jpg" mime-type="image/jpeg"/></media>
+  <caption>Comparison between NIR and visible range images of a Laib
+  painting <cite target-id="casandra"/>.</caption>
+</figure>
+
+<para id="bgp4">
+Unfortunately, conventional NIR cameras that cover the spectral
+range required for a clear image of underdrawings typically cost
+from $30,000 to $50,000.  By reducing the cost of the NIR
+camera, underdrawings could be examined by a much larger set of
+universities, museums, and collectors.  This opens numerous
+opportunities to gain deeper insight into both the creative
+process and the history of artwork.
+</para>
+
+</section>
+
+<section id="prs">
+<title>Problem Requirements and Specifications</title>
+<!--
+\begin{table}[!hb]
+\centering \caption{Problem Specifications}
+\begin{tabular}{|l|l|} \hline
+Camera Spectral Range & At least 900 - 1700 nm \\ \hline
+Light Source Spectral Range & At least 900 - 1700 nm \\ \hline
+Light Source Power & 400 - 800 W \\ \hline
+Image Capture Time & $\leq 7$ minutes \\ \hline
+Portability & Highly preferable \\ \hline
+Image Resolution per Target Length & About 2 lines / mm \\ \hline
+Average Target Dimensions & 0.33 x 0.33 m$^2$ \\ \hline
+Cost Goal & $<$ $5,000 \\ \hline
+\end{tabular}
+\end{table}
+-->
+
+<para id="prsp1">
+The spectral range of a camera depends on the type of detectors
+it employs.  Thus, whatever the overall structure of our design,
+it will have to incorporate a sensor capable of imaging through
+paint.  All pigments except black are somewhat transparent in the
+900 - 1700 nm range, which can easily be
+covered by any NIR detector <cite target-id="richards-03"/>. Even though our problem probably
+constrains us to using an NIR detector of some sort, this still
+leaves us a variety of options. We will want to choose a detector
+that has minimal cost, in order to keep the final camera price
+low.  We will also want a detector that is appropriately sized so
+that it can easily be physically integrated into our overall
+optical system. Additionally, we will need to ensure that any
+detector we choose is capable of providing the dynamic range
+required for underdrawing imaging. That is, 256 grey levels should be distinguishable in the image <cite target-id="baronti-98"/>.
+</para>
+
+<para id="prsp2">
+As Boer found in his original experiments with
+reflectography, for high-quality underimaging a specialized light
+source is necessary, to provide coverage of all relevant
+wavelengths in the NIR range <cite target-id="boer-68"/>.  Our system would also need such a
+source of radiation.  For this source, or sources, 800 W of power
+is a high enough value to give a good signal-to-noise ratio (SNR)
+in standard room temperature conditions <cite target-id="gargano-07"/>.  Using
+significantly higher power is not advisable, as most sources will
+emit a certain portion of their light in the UV and visible
+ranges, and it will be difficult to filter out all of this.
+Intense light from these high-energy ranges could damage a
+painting during imaging.
+</para>
+
+<para id="prsp3">
+The image acquisition time when imaging underdrawings is quite
+flexible.  While experience with conventional charge-coupled
+device (CCD) or complementary metal-oxide-semiconductor (CMOS)
+digital camera technology in the visible range would lead one to
+expect image acquisition time on the order of µsec, such a
+short acquisition time is not critical for this application.  A
+relatively small number of images are typically taken with a
+static target.  The resulting images are typically subjected to
+extensive analysis and comparison with similar images of
+underdrawings from the same artist.  When all of these factors
+are taken together, a small image acquisition time becomes a nice
+extra feature when possible, but is not crucial for success in
+this application domain.  Typical systems targeted towards
+underdrawing imaging take about 15 minutes to acquire and
+process an image due to the mosaicing system used. For the
+underdrawing imaging application, the relaxed image acquisition
+time requirement makes it possible to consider sacrificing low
+acquisition time for improved image quality, improved image
+resolution, or reduced camera cost.
+</para>
+
+<para id="prsp4">
+Portability is a valuable and highly preferred feature for
+underdrawing inspection.  For cumbersome systems, or systems that are
+difficult to relocate, artwork can be moved to the location of the
+camera for inspection.  However, this need for transportation puts the
+original artwork at risk for damage.  Since such great care is needed
+to move the artwork, a portable camera would be a much better solution
+since it removes this potential hazard.  Reducing the risk of damage
+to the original artwork is critical because, while it is generally
+possible to replace a broken camera, it is impossible to replace the
+artwork.
+</para>
+
+<para id="prsp5">
+While analyzing underdrawings does not directly mandate a
+specific image resolution, one must be able to make out the
+various lines with reasonable clarity in order to derive
+meaningful results.  By image resolution, we mean a pixels / mm
+specification for the final reconstructed image of the
+underdrawing.  A camera with a low image resolution could be
+used, but one would need to take many pictures by zooming in on
+small parts of the target. These pieces would later need to be
+aligned and stitched together to view the entire underdrawing, a
+process which is time consuming and could be quite involved for
+the user. A better approach is to use a camera with a larger
+image resolution which can capture the entire underdrawing or
+areas of interest with only one or several pictures.  According
+to our initial research, a system that can provide at least 2
+pixels for each mm of target length should be
+sufficient <cite target-id="saunders-05"/>. We expect to use our design with small to medium
+paintings, as indicated by the average target size of 0.33 m x
+0.33 m.  This assumes our system will have a field of view
+(angular observable range) comparable with the largest artwork
+size.
+</para>
+</section>
+
+<section id="et">
+<title>Existing Technologies</title>
+
+<para id="etp1">
+There are a variety of systems that can be used to image
+underdrawings.  Most contain as their central component cameras such
+as the two listed in the table below.
+</para>
+<!--
+\begin{center}
+\begin{tabularx}{\textwidth}{|c|X|X|} \hline
+\textbf{Camera name} & \textbf{Indigo Alpha} & \textbf{2D-OMA V: 320} \\ \hline
+\textbf{Size (h x w x l, inches)} & 2.1 x 2.5 x 3.7 & 6.15 x 10.46 x
+14.68 \\ \hline
+\textbf{Weight (lbs)} & 12.4 oz & (not specified) \\ \hline
+\textbf{Spectral range (nm)} & 900-1700 & 800-1700 \\ \hline
+\textbf{Image resolution (pixels)} & 320 x 256 & 320 x 256 \\ \hline
+\textbf{Noise variance control} & passive convection and conduction to
+camera bottom & cryogenic cooling \\ \hline
+\textbf{Frame rate (fps)} & 30 & 53 \\ \hline
+\textbf{Source} &
+\url{http://www.flirthermography.com/media/Brochure\%20Alpha\%20english.pdf} &
+\url{http://www.piacton.com/products/imcam/2doma/default.aspx} \\ \hline
+\end{tabularx}
+\end{center}
+-->
+
+<para id="etp2">
+Five alternatives for the detector component of such cameras were
+surveyed by Gargano, Ludwig, and Poldi in their recent comparison of
+IR reflectographic systems <cite target-id="gargano-07"/>.  They analyzed CCD Si, FPA InGaAs, FPA
+HgCdTe, InSb detectors, and vidicon tubes.  The respective upper
+spectral limits for these sensors are 1050 nm, 1700 nm, 2500 nm, 5 nm,
+and 2 nm.  Using pigments modeled after those used in the 15-16th
+centuries, they measured the pigment transparency that could be
+achieved with each sensor.
+</para>
+
+<para id="etp3">
+Their conclusion is that InGaAs sensors are best, as they achieved
+high transparency values and exhibited a large gray range.  However,
+this result only holds for underdrawings make with black, carbon-based
+drawing implements; since black pigments have only 2% transmittance
+in the NIR range, they will not be transparent for any of the five
+devices analyzed.  For underdrawings made with iron gall inks, red
+crayons, or grayish inks, CCD Si cameras are probably best, since
+these substances are usually completely transparent over 1200 nm.
+Our project would focus on providing better imaging for black
+underdrawings only, since, for imaging other types, the best
+system, CCD Si, is already relatively low-cost.
+</para>
+
+<para id="etp4">
+Current underdrawing imaging systems that use sensors other than
+the cheap CCD Si require image scanning to achieve adequate image
+resolution.  This is because their sensor arrays are small, on
+the order of 320 x 256 pixels; it is not economically feasible to
+build larger arrays.  Over the past decades, scanning systems have made advances in precision of
+motion control and image assembly <cite target-id="bertani-90"/>. However, in the image
+reconstruction process, they still face difficulties with
+perfecting image mosaicing.
+</para>
+
+<para id="etp5">
+The best systems to date resemble the CPS 200E positioning system, which moves the camera while the painting stays
+stationary <cite target-id="cps200e"/>. This is advantageous from an art conservation
+standpoint, in that it reduces wear on the painting.  The CPS
+200E device achieves very accurate motion.  However, accurate
+motion alone is not enough to ensure high image quality.  The
+complexity of the image mosaicing task also requires very precise
+control of lighting and knowledge about the geometric distortion
+produced by the exact positioning of the camera in the scanning
+frame.  Lighting control can be achieved by imaging an
+illumination control card to detect inhomogeneity. Geometric
+distortion can be measured by imaging graph paper.  The
+information from these two images is then merged with that of the
+other images during the mosaicing process.
+</para>
+
+<figure id="cps">
+  <media id="idm604976" alt=""><image src="../../media/current_camera.jpg" mime-type="image/jpeg"/></media>
+  <caption>CPS 200E scanner at work <cite target-id="cps200e"/>.</caption>
+</figure>
+
+<para id="etp6">
+Aside from the camera and positioning system, the lighting
+mechanism is the most important element in modern underdrawing
+imaging systems. To reduce any damage to a painting, high-energy
+light, such as that from the visible and UV ranges, should be
+filtered out during imaging. However, the intensity of the light
+source must be high, since this value greatly influences the SNR
+of the detector.  In one typical imaging setup, a pair of halogen bulbs, each with intensity
+in the 400 W is used <cite target-id="burmester-93"/>. The light from these bulbs is passed
+through an RG 1000 filter and a BG 39 filter, which sufficiently
+reduces high-energy radiation without damaging IR imaging
+potential.
+</para>
+
+<para id="etp7">
+The existing solutions to the various aspects of the underdrawing
+imaging problem - NIR detector, camera-painting positioning system,
+mosaicing techniques, and illumination schemes - are inadequate.
+They combine to make systems which, while cheaper than using a
+single huge NIR sensor array to take a single image, derive their
+economical advantage partly at the expense of system portability,
+accuracy, and simplicity.  We intend to implement a different
+alternative to the single huge NIR array.  Our alternative would
+improve upon the current solutions by reducing overall system
+cost, perhaps not only in monetary terms, but also in terms of
+portability, accuracy, or simplicity.  What current systems offer
+for $50,000, we intend to match or beat for
+under $5,000 <cite target-id="lichty-email"/>.
+</para>
+
+</section>
+  </content>
+
+<bib:file>
+<bib:entry id="richards-03">
+  <bib:article>
+    <bib:author>A. Richards</bib:author>
+    <bib:title>Near-IR focal-plane arrays improve camera performance</bib:title>
+    <bib:journal>Compound Semiconductor</bib:journal>
+    <bib:year>2003</bib:year>
+    <bib:month>March</bib:month>
+  </bib:article>
+</bib:entry>
+<bib:entry id="lichty-email">
+  <bib:misc>
+    <bib:author>A. Lichty</bib:author>
+    <bib:howpublished>personal communication</bib:howpublished>
+    <bib:month>October</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="boer-68">
+  <bib:article>
+    <bib:author>J. R. J. van Asperen de Boer</bib:author>
+    <bib:title>Infrared Reflectography: a Method for the Examination of Paintings</bib:title>
+    <bib:journal>Applied Optics</bib:journal>
+    <bib:year>1968</bib:year>
+    <bib:volume>7</bib:volume>
+    <bib:number>9</bib:number>
+    <bib:pages>1711-1714</bib:pages>
+  </bib:article>
+</bib:entry>
+<bib:entry id="sensorsinc">
+  <bib:misc>
+    <bib:title>Applications Overview</bib:title>
+    <bib:howpublished>http://www.sensorsinc.com/overview.html</bib:howpublished>
+    <bib:month>October</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="casandra">
+  <bib:misc>
+    <bib:title>CASANDRA</bib:title>
+    <bib:howpublished>http://www.prip.tuwien.ac.at/Research/Casandra/index.htm</bib:howpublished>
+    <bib:month>October</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="baronti-98">
+  <bib:article>
+    <bib:author>S. Baronti and A. Casini and F. Lotti and S. Porcinai</bib:author>
+    <bib:title>Multispectral imaging system for the mapping of pigments in works of art by use of principal-component analysis</bib:title>
+    <bib:journal>Applied Optics</bib:journal>
+    <bib:year>1998</bib:year>
+    <bib:volume>37</bib:volume>
+    <bib:number>8</bib:number>
+    <bib:pages>1299 - 1309</bib:pages>
+    <bib:month>March</bib:month>
+  </bib:article>
+</bib:entry>
+<bib:entry id="gargano-07">
+  <bib:article>
+    <bib:author>M. Gargano and N. Ludwig and G. Poldi</bib:author>
+    <bib:title>A new methodology for comparing IR reflectographic systems</bib:title>
+    <bib:journal>Infrared Physics &amp; Technology</bib:journal>
+    <bib:year>2007</bib:year>
+    <bib:volume>49</bib:volume>
+    <bib:pages>249-253</bib:pages>
+    <bib:month>January</bib:month>
+  </bib:article>
+</bib:entry>
+<bib:entry id="saunders-05">
+  <bib:inproceedings>
+    <bib:author>Saunders, D. and Atkinson, N. and Cupitt, J. and Liang, H. and Sawyers, C. and Bingham, R.</bib:author>
+    <bib:title>SIRIS: a high resolution scanning infrared camera for examining paintings</bib:title>
+    <bib:booktitle>Optical Methods for Arts and Archaeology. Edited by Salimbeni, Renzo; Pezzati, Luca. Proceedings of the SPIE, Volume 5857, pp. 205-216 (2005).</bib:booktitle>
+    <bib:year>2005</bib:year>
+    <bib:editor>Salimbeni, R. and Pezzati, L.</bib:editor>
+    <bib:volume>5857</bib:volume>
+    <bib:series>Presented at the Society of Photo-Optical Instrumentation Engineers (SPIE) Conference</bib:series>
+    <bib:pages>205-216</bib:pages>
+    <bib:month>August</bib:month>
+  </bib:inproceedings>
+</bib:entry>
+<bib:entry id="bertani-90">
+  <bib:article>
+    <bib:author>D. Bertani and M. Cetica and P. Poggi and G. Puccioni and E. Buzzegoli and D. Kunzelman and S. Cecchi</bib:author>
+    <bib:title>A scanning device for infrared reflectography</bib:title>
+    <bib:journal>Studies in Conservation</bib:journal>
+    <bib:year>1990</bib:year>
+    <bib:volume>35</bib:volume>
+    <bib:number>3</bib:number>
+    <bib:pages>113-116</bib:pages>
+    <bib:month>August</bib:month>
+  </bib:article>
+</bib:entry>
+<bib:entry id="burmester-93">
+  <bib:article>
+    <bib:author>A. Burmester and F. Bayerer</bib:author>
+    <bib:title>Towards Improved Infrared Reflectograms</bib:title>
+    <bib:journal>Studies in Conservation</bib:journal>
+    <bib:year>1993</bib:year>
+    <bib:volume>38</bib:volume>
+    <bib:number>3</bib:number>
+    <bib:pages>145-154</bib:pages>
+    <bib:month>August</bib:month>
+  </bib:article>
+</bib:entry>
+<bib:entry id="cps200e">
+  <bib:misc>
+    <bib:title>CPS 200E</bib:title>
+    <bib:howpublished>http://www.art-innovation.nl/ventura/engine.php?Cmd=seepicture&amp;P_site=316&amp;P_self=450&amp;Random=1203890474</bib:howpublished>
+    <bib:month>October</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+
+</bib:file>
+
+  
+</document>

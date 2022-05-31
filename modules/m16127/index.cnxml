@@ -1,0 +1,46 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml" xmlns:bib="http://bibtexml.sf.net/">
+  <title>DMD Development Kit Setup and Issues</title>
+  <metadata><md:content-id>undefined</md:content-id><md:title/><md:uuid>5b0f8d52-033a-439d-885f-3dbdb0851c0b</md:uuid>
+</metadata>
+  <content>
+    <para id="element-62">After running into many dead ends trying to create a projector-based compressive imaging NIR camera, we did some work with a stand-alone TI board, in a lab table setup.  Before we began working on this project, a similar setup already existed, as shown in <link target-id="fig.spc"/>.  Our lab table setup is very similar, with the exception that we have black cardboard barriers to shield the photodiode from the light source.  Our photodiode, light source, and target object are also of course different from those shown in <link target-id="fig.spc"/>.  <link target-id="fig.cfr"/>, <link target-id="fig.cto"/>, and <link target-id="fig.cba"/> show what the new setup looks like.</para>
+
+<figure id="fig.spc"><title>Original Lab-table Setup</title>
+  <media id="idm2193376" alt=""><image src="../../media/current_spc.jpg" mime-type="image/jpeg"/></media>
+  <caption> Original lab-table version of a compressive sensing camera <cite target-id="cscam"/>.</caption></figure>
+
+<figure id="fig.cfr"><title>Camera Front End</title>
+  <media id="idp3042352" alt=""><image src="../../media/new_front.jpg" mime-type="image/jpeg" width="300"/></media>
+  <caption>Light source, target object, focusing lens, and DMD</caption></figure>
+
+<figure id="fig.cto"><title>Camera Top View</title>
+  <media id="idm12846048" alt=""><image src="../../media/new_dmd.jpg" mime-type="image/jpeg" width="300"/></media>
+  <caption>TI 1100 Discovery Board and light source</caption></figure>
+
+<figure id="fig.cba"><title>Camera Back End</title>
+  <media id="idm2246576" alt=""><image src="../../media/new_back.jpg" mime-type="image/jpeg" width="200"/></media>
+  <caption>Focusing lenses and photodiode</caption></figure>
+
+<para id="element-757">With this setup, we have direct control of the DMD mirrors; the TI 1100 Discovery Board has a high-speed interface that we can control using ALP (Application Programming Interface) software.  To capture diode data, we use VILogger, then clean up the resulting stream in MATLAB.  Thus, it seems probable that with such a setup, achieving a fast capture speed is within reach.</para><para id="element-456">However, we continued to experience problems on the NIR lighting and sensing ends of the camera.  The light bulb burnt most substances we tried to mount it on, and had to be positioned just right in order to reflect enough light off the target object.  Further, the diode data showed a lot of noise when the signal was low, as can be seen in <link target-id="fig.pw"/>.  Over a long capture period, we also often observed a drift in the base signal, as shown in <link target-id="fig.pwt"/>.</para>
+
+<figure id="fig.pw"><title>Noisy Diode Data</title>
+  <media id="idm5104880" alt=""><image src="../../media/pwalsh32.png" mime-type="image/png" width="400"/></media>
+  <caption>Each set of pulses should be flat, as each is a set of the same random frame sent out repeatedly; the diode signal is clearly noisy</caption></figure>
+
+<figure id="fig.pwt"><title>Drifing Diode Baseline</title>
+  <media id="idm4755168" alt=""><image src="../../media/pwalsh32tilt.PNG" mime-type="image/png" width="400"/></media>
+  <caption>Over a capture period of several minutes, the base diode signal decreases significantly</caption></figure>  
+
+</content>
+
+<bib:file>
+<bib:entry id="cscam">
+  <bib:misc>
+   <bib:howpublished>http://www.dsp.ece.rice.edu/cs/cscamera/</bib:howpublished>
+    <bib:month>October</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+</bib:file>
+  
+</document>

@@ -1,0 +1,65 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml" xmlns:bib="http://bibtexml.sf.net/">
+  <title>Project Summary</title>
+  <metadata><md:content-id>undefined</md:content-id><md:title/><md:uuid>3b271421-eab7-4eb4-af3f-12cc148dcda7</md:uuid>
+</metadata>
+  <content>
+    <para id="element-61">With the projector camera, we attempted to image many different targets.  These ranged from fruit to sheets of metal.  The clearest images we took were of a "K" cut out of a sheet of metal.  These images were our best because metal is a good reflector of NIR light, which meant we had a strong signal at the photodiode.  Both a visible and an NIR image of this K are shown below.</para><figure id="element-590"><title>Visible Image of a K</title>
+  <media id="idp2638880" alt=""><image src="../../media/visible-k.jpg" mime-type="image/jpeg" width="400"/></media>
+  <caption>64x64 image, taken using 1600 Walsh patterns</caption>
+</figure><figure id="element-860"><title>NIR Image of a K</title>
+  <media id="idm10765088" alt=""><image src="../../media/ir-k.jpg" mime-type="image/jpeg" width="400"/></media>
+  <caption>64x64 image, taken using 1600 Walsh patterns</caption></figure><para id="element-977">With this project, we have made a start on the process of incorporating CS technology into a practical NIR camera.  This type of camera requires only a single
+photodetector, which means it has the potential to be at least ten times ten times cheaper than
+current systems on the market.  From this project, we have observed that the two main challenges in creating such a camera are as follows: 
+
+<list id="l1">
+<item>Achieving a high enough NIR signal after reflection off a target object, and</item>
+<item>Speeding mirror control to lower image capture time.</item>  
+</list>
+
+Although we mostly concentrated on a projector-based approach during this project, it seems that the restrictive nature of the projector may not make it the best choice for development of this type of camera.  Further investigation of the TI Discovery Board alternative would be worthwhile.</para>
+
+    <para id="element-467">To give a broader perspective on what can be done with a good NIR camera, we conclude with a brief overview of potential application areas for a single-pixel NIR camera.</para><para id="practical1">NIR imaging has a wide and expanding array of application areas.  These include medical imaging, energy auditing, PCB fault analysis, food quality monitoring, and underdrawing imaging.  For medical imaging, NIR tomography, when combined with MRI images, is useful for detecting breast tumors <cite target-id="bw2002dhn"/>.  In the energy auditing field, NIR cameras can determine which parts of a building are hot/cold greedy.  This helps architects and construction crews to design and build more eco-friendly structures.  In terms of PCB fault analysis, NIR imaging is used to pinpoint hot/cold elements on a chip, to spot current leakage <cite target-id="beaudoin2001clf"/>.  In the food quality realm, foods that require high-temperature cooking are candidates for NIR monitoring <cite target-id="nuggets"/>.  In terms of underdrawing imaging, NIR cameras provide access to painter's planning sketches.  This allows art collectors to verify the authenticity of works of art that they but, and gives scholars a chance to examine the old masters' creative processes.</para><figure id="element-503"><title>Chicken Nuggets</title>
+  <media id="idp2521408" alt=""><image src="../../media/chicken.jpg" mime-type="image/jpeg" height="300" width="450"/></media>
+  <caption>Monitoring heat distribution in chicken nuggets as they cook ensures quality, bacteria-free meat will emerge at the end of a conveyor belt oven <cite target-id="nuggets"/>.</caption></figure><figure id="element-551"><title>NIR Image of a House</title>
+  <media id="idm3428768" alt=""><image src="../../media/house.jpg" mime-type="image/jpeg" height="300" width="450"/></media>
+  <caption>Energy audit of a home, showing areas where the house fails to retain heat <cite target-id="house"/>.</caption></figure> 
+   
+  </content>
+
+<bib:file>
+<bib:entry id="nuggets">
+  <bib:misc>
+  <bib:howpublished>http://atrp.gatech.edu/pt19-1/core_temp_nuggets.jpg</bib:howpublished>
+    <bib:month>November</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="house">
+  <bib:misc>
+<bib:howpublished>http://techalive.mtu.edu/meec/module13/images/building_IR.jpg</bib:howpublished>
+    <bib:month>November</bib:month>
+    <bib:year>2007</bib:year>
+  </bib:misc>
+</bib:entry>
+<bib:entry id="bw2002dhn">
+  <bib:article>
+    <bib:author>Dehghani, H. and Pogue, B.W. and Paulsen, K.D.</bib:author>
+    <bib:title>Development of hybrid NIR/MRI imaging system algorithm: use of a-priori information for tumor detection in the female breast</bib:title>
+    <bib:journal>Proc. IEEE Int. Symp. on Biomedical Imaging</bib:journal>
+    <bib:year>2002</bib:year>
+    <bib:pages>657–60</bib:pages>
+  </bib:article>
+</bib:entry>
+<bib:entry id="beaudoin2001clf">
+  <bib:article>
+    <bib:author>Beaudoin, F. and Imbert, G. and Perdu, P. and Trocque, C.</bib:author>
+    <bib:title>Current leakage fault localization using backside OBIRCH</bib:title>
+    <bib:journal>Physical and Failure Analysis of Integrated Circuits, 2001. IPFA 2001. Proceedings of the 2001 8th International Symposium on the</bib:journal>
+    <bib:year>2001</bib:year>
+    <bib:pages>121–125</bib:pages>
+  </bib:article>
+</bib:entry>
+</bib:file>
+  
+</document>
